@@ -155,6 +155,9 @@ def start():
                 run = False
     return matrix_state
 
+
+# running the start function and saving the returned matrix as the state of the game
+matrix_state = start()
 # game loop 
 while running:
     screen.fill((208, 236, 245)) # filling with color
