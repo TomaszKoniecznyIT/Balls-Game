@@ -125,7 +125,7 @@ def board():
     screen.blit(screen_game, (230, 30))
 
 
-# creating a 9 x 9 matrix to hold for the state of the board (filled with zeros at the start)
+# creating a 9 x 9 matrix for start (filled with zeros)
 def matrix_start():
     start_matrix = []
     matrX = []
@@ -136,6 +136,19 @@ def matrix_start():
         matrX = []
     return start_matrix
 
+
+def start():
+    matrix_state = matrix_start()
+    for _ in range(3):
+        color_list.append(random.randint(1,7))
+        run = True
+        while run:
+            x = random.randint(0, 8)
+            y = random.randint(0, 8)
+            if matrix_state[x][y] == 0:
+                matrix_state[x][y] = random.randint(1, 7)
+                run = False
+    return matrix_state
 
 # game loop 
 while running:
