@@ -154,6 +154,24 @@ def matrix_start():
     return start_matrix
 
 
+# a function that creates a matrix with the coordinates of the centers of each playing field
+def center_matrix(i,j):
+    middleX = 260
+    middleY = 60
+    line = []
+    matrix_middle = []
+    for w in range(9):
+        for q in range(9):
+            center_coordinates = (middleX, middleY)
+            line.append(center_coordinates)
+            middleX += 60
+        matrix_middle.append(line)
+        middleY += 60
+        middleX = 260
+        line = []
+    return matrix_middle[i][j]
+
+
 # game start function
 def start():
     # takes a matrix of 9 x 9 zeros as the game state matrix
@@ -186,3 +204,17 @@ while running:
     reset_box()
     score_box()
     the_best_score_box()
+
+    # displaying the circles in the previously drawn color
+    # next 3 balls
+    xx = 40
+    yy = 230
+    for i in color_list:
+        pygame.draw.circle(screen, colors_balls[i], (xx, yy), 20)
+        xx += 60
+    # game board
+    for i in range(9):
+        for j in range(9):
+            if matrix_state[i][j] != 0:
+                pygame.draw.circle(screen, colors_balls[matrix_state[i][j]], center_matrix(i,j), 20)
+    
