@@ -103,13 +103,30 @@ def the_best_score_box():
     box_score = pygame.Surface([160, 110])
     box_score.fill((165, 208, 232))
     screen.blit(box_score, (20, 450))
-     # adding text and the best score
+    # adding text and the best score
     score_txt_1 = txt1.render("THE BEST", True, (59, 32, 212))
     screen.blit(score_txt_1, (40, 455))
     score_txt_2 = txt1.render("SCORE", True, (59, 32, 212))
     screen.blit(score_txt_2, (58, 480))
     score_txt_3 = txt1.render(str(best_score), True, (59, 32, 212))
     screen.blit(score_txt_3, (30, 520))
+
+
+# function creates a rectangle with information about the end of the game
+def game_over_box():
+    # drawing a rectangle with game over information
+    box_game_over = pygame.Surface([450, 150])
+    box_game_over.fill((255, 255, 255))
+    screen.blit(box_game_over, (275, 190))
+    # adding text Game Over
+    game_over_txt1 = txt3.render("GAME OVER", True, (0, 0, 0))
+    screen.blit(game_over_txt1, (300, 200))
+    # adding text and score
+    game_over_txt2 = txt1.render("SCORE " + str(score), True, (0, 0, 0))
+    screen.blit(game_over_txt2, (410, 260))
+    # adding text how to start a new game
+    game_over_txt3 = txt2.render("TO RESTART PRESS R", True, (0, 0, 0))
+    screen.blit(game_over_txt3, (370, 300))
 
 
 # function drawing a line separating the game board from the results
