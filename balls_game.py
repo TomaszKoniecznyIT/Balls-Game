@@ -137,15 +137,20 @@ def matrix_start():
     return start_matrix
 
 
+# game start function
 def start():
+    # takes a matrix of 9 x 9 zeros as the game state matrix
     matrix_state = matrix_start()
+    # drawing 3 consecutive colors of balls
     for _ in range(3):
         color_list.append(random.randint(1,7))
+        # drawing a place on the board when a redraw is already occupied
         run = True
         while run:
             x = random.randint(0, 8)
             y = random.randint(0, 8)
             if matrix_state[x][y] == 0:
+                # color draw for this item
                 matrix_state[x][y] = random.randint(1, 7)
                 run = False
     return matrix_state
