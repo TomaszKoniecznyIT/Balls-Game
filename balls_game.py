@@ -84,6 +84,13 @@ def reset_box():
     screen.blit(reset_txt, (40, 365))
 
 
+# the function resets the game score, clears the color list and sets the boards to the initial settings
+def reset_game():
+    color_list = []
+    matrix_state = start()
+    score = 0
+
+
 # function creating rectangle with result
 def score_box():
     # drawing a rectangle with result
