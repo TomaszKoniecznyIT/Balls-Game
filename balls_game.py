@@ -238,5 +238,17 @@ while running:
     if score > best_score:
         best_score = score  
     
+    # display
     pygame.display.flip()
+
+    # after pressing r reset the game
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_r]:
+        reset_game()
+    # click on reset box - reset the game
+    mouse = pygame.mouse.get_pressed()
+    pos = pygame.mouse.get_pos()
+    if 20 <= pos[0] <= 180 and 350 <= pos[1] <= 405 and mouse[0] == True:
+        reset_game()
+        flaga = False
     
