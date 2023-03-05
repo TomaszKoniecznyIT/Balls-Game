@@ -218,3 +218,18 @@ while running:
             if matrix_state[i][j] != 0:
                 pygame.draw.circle(screen, colors_balls[matrix_state[i][j]], center_matrix(i,j), 20)
     
+    # check if the game is over
+    zero = 0
+    for i in matrix_state:
+        for j in i:
+            if j == 0:
+                zero += 1
+    # if there are less than 3 empty fields on the board, call the function
+    if zero < 3:
+        game_over_box()
+    # checking if the result is greater than the best result so far
+    if score > best_score:
+        best_score = score  
+    
+    pygame.display.flip()
+    
