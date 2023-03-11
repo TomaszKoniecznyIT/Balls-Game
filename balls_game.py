@@ -198,6 +198,38 @@ def start():
     return matrix_state
 
 
+def path_check(startX, startY, endX, endY):
+    to_check = [(startX, startY)]
+    accessible = []
+    end = (endX, endY)
+    possible = False
+    for i in to_check:
+        if (i[1] - 1) >= 0 and matrix_state[i[0]][i[1] - 1] == 0:
+            if (i[0], (i[1] - 1)) not in to_check:
+                to_check.append((i[0], (i[1] - 1)))
+            if (i[0], (i[1] - 1)) not in accessible:
+                accessible.append((i[0], (i[1] - 1)))
+        if (i[1] + 1) < 9 and matrix_state[i[0]][i[1] + 1] == 0:
+            if (i[0], (i[1] + 1)) not in to_check:
+                to_check.append((i[0], (i[1] + 1)))
+            if (i[0], (i[1] + 1)) not in accessible:
+                accessible.append((i[0], (i[1] + 1)))
+        if (i[0] - 1) >= 0 and matrix_state[i[0] - 1][i[1]] == 0:
+            if ((i[0] - 1), i[1]) not in to_check:
+                to_check.append(((i[0] - 1), i[1]))
+            if ((i[0] - 1), i[1]) not in accessible:
+                accessible.append(((i[0] - 1), i[1]))
+        if (i[0] + 1) < 9 and matrix_state[i[0] + 1][i[1]] == 0:
+            if ((i[0] + 1), i[1]) not in to_check:
+                to_check.append(((i[0] + 1), i[1]))
+            if ((i[0] + 1), i[1]) not in accessible:
+                accessible.append(((i[0] + 1), i[1]))
+        if end in accessible:
+            possible = True
+            break
+    return possible
+
+
 # running the start function and saving the returned matrix as the state of the game
 matrix_state = start()
 # game loop 
