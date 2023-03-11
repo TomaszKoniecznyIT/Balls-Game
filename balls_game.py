@@ -245,10 +245,15 @@ while running:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_r]:
         reset_game()
+        flag = False
     # click on reset box - reset the game
     mouse = pygame.mouse.get_pressed()
     pos = pygame.mouse.get_pos()
     if 20 <= pos[0] <= 180 and 350 <= pos[1] <= 405 and mouse[0] == True:
         reset_game()
-        flaga = False
-    
+        flag = False
+    # event listening
+    for event in pygame.event.get():
+        # press exit game
+        if event.type == pygame.QUIT:
+            running = False
