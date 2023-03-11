@@ -91,11 +91,8 @@ def reset_box():
     screen.blit(reset_txt, (40, 365))
 
 
-# the function resets the game score, clears the color list and sets the boards to the initial settings
-def reset_game():
-    color_list = []
-    matrix_state = start()
-    score = 0
+
+
 
 
 # function creating rectangle with result
@@ -381,13 +378,17 @@ while running:
     # after pressing r reset the game
     keys = pygame.key.get_pressed()
     if keys[pygame.K_r]:
-        reset_game()
+        color_list = []
+        matrix_state = start()
+        score = 0
         flag = False
     # click on reset box - reset the game
     mouse = pygame.mouse.get_pressed()
     pos = pygame.mouse.get_pos()
     if 20 <= pos[0] <= 180 and 350 <= pos[1] <= 405 and mouse[0] == True:
-        reset_game()
+        color_list = []
+        matrix_state = start()
+        score = 0
         flag = False
     # event listening
     for event in pygame.event.get():
