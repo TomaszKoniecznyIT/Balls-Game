@@ -22,8 +22,13 @@ color_list = [] # I create an empty list in which the colors will be held
 score = 0
 best_score = 0
 
-running = True
+mouseX = []
+mouseY = []
+value_xy = []
+correct_field = 0
 
+running = True
+flag = False
 
 # the function draws the lines of the game board
 def board_lines():
@@ -231,6 +236,7 @@ def path_check(startX, startY, endX, endY):
             break
     return possible
 
+
 # checking if at least five balls of the same color are placed next to each other vertically, horizontally or diagonally
 def check_5(x):
     xy_coordinates = []
@@ -312,6 +318,14 @@ def check_5(x):
                 deletion.append(i)
     return deletion
 
+
+# clearing lists with mouse event data
+def clear_mouse():
+    mouseY.clear()
+    mouseX.clear()
+    value_xy.clear()
+
+
 # running the start function and saving the returned matrix as the state of the game
 matrix_state = start()
 # game loop 
@@ -325,6 +339,13 @@ while running:
     reset_box()
     score_box()
     the_best_score_box()
+
+    # changing the color of a given field after the first mouse click
+    if flag:
+        lin2 = pygame.Surface([60, 60])
+        lin2.fill((82, 98, 161))
+        screen.blit(lin2, (230 + mouseX[-1] * 60, 30 + mouseY[-1] * 60))
+
 
     # displaying the circles in the previously drawn color
     # next 3 balls
@@ -371,3 +392,54 @@ while running:
         # press exit game
         if event.type == pygame.QUIT:
             running = False
+        # game algorithm - mouse clicks on the game board
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                pos = pygame.mouse.get_pos()
+                # read color and add to value_xy
+                if 230<pos[0]<770 and 30<pos[1]<570:
+                    mouseX.append((int(pos[0]) - 230) // 60)
+                    mouseY.append((int(pos[1]) - 30) // 60)
+                    value_xy.append(matrix_state[mouseY[-1]][mouseX[-1]])
+                    # checking whether it is the first click of the mouse or the second and whether it is on an empty field or a field with a colored ball
+                    if value_xy[-1] != 0 and correct_field % 2 == 0:
+                        correct_field += 1
+                        flag = True
+                    elif value_xy[-1] == 0 and correct_field % 2 == 1:
+                        correct_field += 1
+                        flag = False
+                        # checking if there is a path between the first and second mouse click
+                        if path_check(mouseY[-2], mouseX[-2], mouseY[-1], mouseX[-1]):
+                            # ball shift
+                            matrix_state[mouseY[-1]][mouseX[-1]] = value_xy[-2]
+                            matrix_state[mouseY[-2]][mouseX[-2]] = 0
+                            # calling the check_5 function, clearing the fields and adding points to the result
+                            for i in check_5(value_xy[-2]):
+                                matrix_state[i[0]][i[1]] = 0
+                                score += 2
+                                draw = False
+                            # drawing the next 3 balls and places for the previous ones
+                            if draw:
+                                for i in color_list:
+                                    run = True
+                                    while run:
+                                        x = random.randint(0, 8)
+                                        y = random.randint(0, 8)
+                                        if matrix_state[x][y] == 0:
+                                            matrix_state[x][y] = i
+                                            # checking whether the added balls will not create a line of five
+                                            for j in check_5(i):
+                                                matrix_state[j[0]][j[1]] = 0
+                                                score += 2
+                                            run = False
+                                # draw another 3 balls
+                                color_list = []
+                                for i in range(3):
+                                    color_list.append(random.randint(1, 7))
+                            
+                            draw = True
+                            clear_mouse()
+                    else:
+                        clear_mouse()
+                        correct_field = 0
+                        flag = False 
