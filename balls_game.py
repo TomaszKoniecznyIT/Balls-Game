@@ -231,6 +231,86 @@ def path_check(startX, startY, endX, endY):
             break
     return possible
 
+# checking if at least five balls of the same color are placed next to each other vertically, horizontally or diagonally
+def check_5(x):
+    xy_coordinates = []
+    or_next_x = []
+    or_next_y = []
+    or_next_xy = []
+    or_next_xym = []
+    deletion = []
+    # saving the coordinates of balls of the same color to the list
+    for i in range(9):
+        for j in range(9):
+            if matrix_state[i][j] == x:
+                xy_coordinates.append((i, j))
+    
+    for i in xy_coordinates:
+        x = 0
+        y = 0
+        # horizontally  
+        for j in range(5):
+            next = ((i[0] + x, i[1]))
+            if next in xy_coordinates:
+                or_next_x.append(next)
+            else:
+                or_next_x = []
+                x = 0
+                break
+            x += 1
+        # vertical
+        for j in range(5):
+            next = ((i[0], i[1] + y))
+            if next in xy_coordinates:
+                or_next_y.append(next)
+            else:
+                or_next_y = []
+                y = 0
+                break
+            y += 1
+        
+        s = 0
+        z = 0
+        # "diagonally" 
+        for j in range(5):
+            next = ((i[0] + s, i[1] + z))
+            if next in xy_coordinates:
+                or_next_xy.append(next)
+            else:
+                or_next_xy = []
+                s = 0
+                z = 0
+                break
+            s += 1
+            z += 1
+        s = 0
+        z = 0
+        # "diagonally" 
+        for j in range(5):
+            next = ((i[0] - s, i[1] + z))
+            if next in xy_coordinates:
+                or_next_xym.append(next)
+            else:
+                or_next_xym = []
+                s = 0
+                z = 0
+                break
+            s += 1
+            z += 1
+        # coordinates to delate
+        for i in or_next_x:
+            if i not in deletion:
+                deletion.append(i)
+        for i in or_next_y:
+            if i not in deletion:
+                deletion.append(i)
+        for i in or_next_xy:
+            if i not in deletion:
+                deletion.append(i)
+        for i in or_next_xym:
+            if i not in deletion:
+                deletion.append(i)
+    return deletion
 
 # running the start function and saving the returned matrix as the state of the game
 matrix_state = start()
