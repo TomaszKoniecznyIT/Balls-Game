@@ -197,12 +197,14 @@ def start():
                 run = False
     return matrix_state
 
-
+# function checks whether it is possible to move the ball to the selected point
 def path_check(startX, startY, endX, endY):
     to_check = [(startX, startY)]
     accessible = []
     end = (endX, endY)
     possible = False
+    # checking every nearby point
+    # if the conditions are met, adding to the list of points to be checked and the list of available points
     for i in to_check:
         if (i[1] - 1) >= 0 and matrix_state[i[0]][i[1] - 1] == 0:
             if (i[0], (i[1] - 1)) not in to_check:
