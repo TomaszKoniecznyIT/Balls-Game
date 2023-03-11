@@ -29,6 +29,8 @@ correct_field = 0
 
 running = True
 flag = False
+draw = True
+
 
 # the function draws the lines of the game board
 def board_lines():
@@ -116,9 +118,9 @@ def the_best_score_box():
     box_score.fill((165, 208, 232))
     screen.blit(box_score, (20, 450))
     # adding text and the best score
-    score_txt_1 = txt1.render("THE BEST", True, (59, 32, 212))
+    score_txt_1 = txt2.render("THE BEST", True, (59, 32, 212))
     screen.blit(score_txt_1, (40, 455))
-    score_txt_2 = txt1.render("SCORE", True, (59, 32, 212))
+    score_txt_2 = txt2.render("SCORE", True, (59, 32, 212))
     screen.blit(score_txt_2, (58, 480))
     score_txt_3 = txt1.render(str(best_score), True, (59, 32, 212))
     screen.blit(score_txt_3, (30, 520))
