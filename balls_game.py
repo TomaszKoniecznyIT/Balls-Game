@@ -1,5 +1,6 @@
-import pygame   # importing game modules
-import random   # importing the randomizing module
+import pygame                   # importing game modules
+import random                   # importing the randomizing module
+from json import load, dump     # importing a module to handle json files
 
 
 pygame.init() # initialization of game modules
@@ -89,10 +90,6 @@ def reset_box():
     # adding text to the button
     reset_txt = txt2.render("R - RESET", True, (59, 32, 212))
     screen.blit(reset_txt, (40, 365))
-
-
-
-
 
 
 # function creating rectangle with result
@@ -200,6 +197,7 @@ def start():
                 matrix_state[x][y] = random.randint(1, 7)
                 run = False
     return matrix_state
+
 
 # function checks whether it is possible to move the ball to the selected point
 def path_check(startX, startY, endX, endY):
@@ -318,12 +316,22 @@ def check_5(x):
     return deletion
 
 
+# the function reads the best result from the json file
+def read_best_score():
+    with open('best_score.json') as data:
+        score_save = load(data)
+        return score_save["best_score"]
+
+
 # clearing lists with mouse event data
 def clear_mouse():
     mouseY.clear()
     mouseX.clear()
     value_xy.clear()
 
+
+# setting the best_score value taken from the file
+best_score = read_best_score()
 
 # running the start function and saving the returned matrix as the state of the game
 matrix_state = start()
@@ -370,8 +378,13 @@ while running:
         game_over_box()
     # checking if the result is greater than the best result so far
     if score > best_score:
-        best_score = score  
-    
+        # saving to json file
+        with open('best_score.json', 'w') as data:
+            score_save = {"best_score": score}
+            dump (score_save, data)
+        
+        best_score = read_best_score()
+           
     # display
     pygame.display.flip()
 
